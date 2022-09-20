@@ -2,12 +2,15 @@ package com.fi.githubfinder.ui.screen.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,7 +34,8 @@ created by -fi-
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    viewModel.getGit()
+//    val uiState by viewModel.uiState.collectAsState(HomeUIState(isLoading = false))
+    val time by viewModel.countDown.collectAsState(initial = 10)
 
     Scaffold(
         topBar = {
@@ -50,7 +54,14 @@ fun HomeScreen(
         }
     ) {
         Column {
-            if(viewModel.isLoading.value) CircularProgressIndicator()
+            //if(uiState.isLoading) CircularProgressIndicator()
+        }
+        Box(modifier = Modifier.fillMaxSize()){
+            Text(
+                text = time.toString(),
+                fontSize = 30.sp,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 }

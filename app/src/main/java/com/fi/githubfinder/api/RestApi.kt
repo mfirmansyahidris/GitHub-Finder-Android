@@ -2,6 +2,8 @@ package com.fi.githubfinder.api
 
 import com.fi.githubfinder.config.NetworkConfig
 import com.fi.githubfinder.data.models.ResponseGitRepositories
+import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -20,5 +22,5 @@ interface RestApi {
         @Query("q") query: String?,
         @Query("page") page: Int = 0,
         @Query("per_page") perPage: Int = 0,
-    ): ResponseGitRepositories
+    ): Response<ResponseGitRepositories>
 }

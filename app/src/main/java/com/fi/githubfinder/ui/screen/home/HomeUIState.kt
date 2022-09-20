@@ -9,4 +9,4 @@ created by -fi-
  ****************************************
  */
 
-data class HomeUIState (val isLoading: Boolean = false)
+data class HomeUIState (var isLoading: Boolean = false)

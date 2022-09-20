@@ -3,6 +3,8 @@ package com.fi.githubfinder.data.repositories
 import com.fi.githubfinder.api.RestApi
 import com.fi.githubfinder.config.NetworkConfig
 import com.fi.githubfinder.data.models.ResponseGitRepositories
+import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 import javax.inject.Inject
 
 /**
@@ -15,7 +17,7 @@ created by -fi-
  */
 
 class GitRepository @Inject constructor(private val api: RestApi) {
-    suspend fun getGit(query: String, page: Int,  perPage: Int): ResponseGitRepositories {
+    suspend fun getGit(query: String, page: Int,  perPage: Int): Response<ResponseGitRepositories> {
         return api.getGit(
             query = query,
             page = page,
