@@ -11,13 +11,13 @@ created by -fi-
 
 enum class Screen{
     Splash,
-    Home;
+    Main;
 
     companion object{
         fun fromRoute(route: String?): Screen =
             when(route?.substringBefore("/")){
                 Splash.name -> Splash
-                Home.name -> Home
+                Main.name -> Main
                 null -> Splash
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }

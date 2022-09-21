@@ -4,12 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fi.githubfinder.ui.screen.Screen
 import com.fi.githubfinder.ui.screen.SplashScreen
-import com.fi.githubfinder.ui.screen.home.HomeScreen
+import com.fi.githubfinder.ui.screen.main.MainScreen
 import com.fi.githubfinder.ui.theme.GithubFinderTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview
 @Composable
 fun MainApp() {
     GithubFinderTheme {
@@ -35,8 +37,8 @@ fun MainApp() {
             composable(Screen.Splash.name) {
                 SplashScreen(navController)
             }
-            composable(Screen.Home.name) {
-                HomeScreen()
+            composable(Screen.Main.name) {
+                MainScreen()
             }
         }
     }
