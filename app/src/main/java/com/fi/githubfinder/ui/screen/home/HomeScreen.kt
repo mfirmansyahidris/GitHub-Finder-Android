@@ -38,67 +38,11 @@ created by -fi-
  */
 
 @Composable
-fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
-) {
-//    val uiState by viewModel.uiState.collectAsState(HomeUIState(isLoading = false))
-    val time by viewModel.countDown.collectAsState(initial = 10)
-
-    Scaffold(
-        topBar = {
-            TopAppBar {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
-                    )
-                }
-            }
-        }
-    ) {
-        Column {
-            //if(uiState.isLoading) CircularProgressIndicator()
-        }
-        Box(modifier = Modifier.fillMaxSize()){
-            Text(
-                text = time.toString(),
-                fontSize = 30.sp,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
-    }
-}
-
-
-
-@Preview
-@Composable
-fun HomeScreenDev(){
-    Scaffold(
-        topBar = {
-            TopAppBar {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
-                    )
-                }
-            }
-        }
-    ){
-        LazyColumn {
-            items(20){
-                GitRepoItem()
-                Divider()
-            }
+fun HomeScreen(){
+    LazyColumn {
+        items(20){
+            GitRepoItem()
+            Divider()
         }
     }
 }
@@ -164,5 +108,24 @@ fun GitRepoItem(){
                 )
             }
         }
+    }
+}
+
+@Composable
+fun HomeScreenDev(
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
+//    val uiState by viewModel.uiState.collectAsState(HomeUIState(isLoading = false))
+    val time by viewModel.countDown.collectAsState(initial = 10)
+
+    Column {
+        //if(uiState.isLoading) CircularProgressIndicator()
+    }
+    Box(modifier = Modifier.fillMaxSize()){
+        Text(
+            text = time.toString(),
+            fontSize = 30.sp,
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }

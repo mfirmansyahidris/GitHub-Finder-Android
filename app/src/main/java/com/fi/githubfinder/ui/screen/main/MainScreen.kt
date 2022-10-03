@@ -1,9 +1,16 @@
 package com.fi.githubfinder.ui.screen.main
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -11,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.fi.githubfinder.R
 import com.fi.githubfinder.ui.screen.about.AboutScreen
 import com.fi.githubfinder.ui.screen.favorite.FavoriteScreen
 import com.fi.githubfinder.ui.screen.home.HomeScreen
@@ -24,11 +32,26 @@ created by -fi-
  ****************************************
  */
 
+@Preview
 @Composable
 fun MainScreen(){
     val navController = rememberNavController()
     Scaffold(
-        bottomBar = { BottomNavigation(navController = navController) }
+        topBar = {
+            TopAppBar {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+            }
+        },
+        bottomBar = { BottomNavigation(navController = navController) },
     ) {
         NavigationGraph(navController = navController)
     }
@@ -52,9 +75,9 @@ fun BottomNavigation(navController: NavController) {
                 icon = { Icon(item.icon, contentDescription = item.name) },
                 label = { Text(
                         text = item.menu,
-                        fontSize = 9.sp
+                        fontSize = 12.sp
                 ) },
-                selectedContentColor = Color.Black,
+                selectedContentColor = Color.White,
                 unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.name,
