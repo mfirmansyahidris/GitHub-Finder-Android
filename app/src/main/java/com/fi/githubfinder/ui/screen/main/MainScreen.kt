@@ -2,6 +2,7 @@ package com.fi.githubfinder.ui.screen.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,9 +53,15 @@ fun MainScreen(){
             }
         },
         bottomBar = { BottomNavigation(navController = navController) },
-    ) {
-        NavigationGraph(navController = navController)
-    }
+        content = {
+            Box(
+                modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
+                content = {
+                    NavigationGraph(navController = navController)
+                }
+            )
+        },
+    )
 }
 
 @Composable

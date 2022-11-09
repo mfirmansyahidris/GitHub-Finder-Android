@@ -9,24 +9,21 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
-import com.fi.githubfinder.R
+import com.fi.githubfinder.data.models.GitData
+import com.fi.githubfinder.utils.collectAsStateWithLifecycle
 
 /**
  ****************************************
@@ -38,17 +35,20 @@ created by -fi-
  */
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     LazyColumn {
-        items(20){
-            GitRepoItem()
+        items(uiState.data.size) {
+            uiState.data[it]?.let { it1 -> GitRepoItem(it1) }
             Divider()
         }
     }
 }
 
 @Composable
-fun GitRepoItem(){
+fun GitRepoItem(data: GitData) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -59,7 +59,7 @@ fun GitRepoItem(){
         Row {
             Spacer(modifier = Modifier.width(10.dp))
             Image(
-                painter = rememberAsyncImagePainter("https://avatars.githubusercontent.com/u/31582273?v=4"),
+                painter = rememberAsyncImagePainter(data.owner?.avatarUrl),
                 contentDescription = null,
                 modifier = Modifier
                     .size(55.dp)
@@ -69,7 +69,7 @@ fun GitRepoItem(){
             Spacer(modifier = Modifier.width(10.dp))
             Column(modifier = Modifier.weight(1F)) {
                 Text(
-                    text = "User Name",
+                    text = data.name ?: "",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -77,7 +77,7 @@ fun GitRepoItem(){
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sagittis ex id arcu fringilla eleifend. Nam ultricies arcu quam, a blandit urna condimentum consequat. Maecenas erat odio, fermentum at tincidunt eu, lobortis eu turpis. Vivamus non dolor vehicula, ornare nisi in, congue dolor. Curabitur sagittis est condimentum consequat finibus. Integer quis elit quis ligula viverra ultricies vestibulum eget ipsum. Sed ac elementum ligula. Praesent lacus erat, pretium vel mi a, euismod dignissim ante. Morbi a luctus quam. Aenean a pretium quam. Praesent sem massa, luctus sit amet rhoncus eget, interdum sit amet velit. Donec convallis eget odio ac mollis",
+                    data.description ?: "",
                     style = TextStyle(
                         fontSize = 14.sp,
                     ),
@@ -87,7 +87,7 @@ fun GitRepoItem(){
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = "Java",
+                    text = data.language ?: "",
                     style = TextStyle(
                         fontSize = 14.sp,
                         fontStyle = FontStyle.Italic,
@@ -100,7 +100,7 @@ fun GitRepoItem(){
             Spacer(modifier = Modifier.width(10.dp))
             IconButton(
                 onClick = {}
-            ){
+            ) {
                 Icon(
                     Icons.Filled.Favorite,
                     contentDescription = "Favorite",
@@ -108,24 +108,5 @@ fun GitRepoItem(){
                 )
             }
         }
-    }
-}
-
-@Composable
-fun HomeScreenDev(
-    viewModel: HomeViewModel = hiltViewModel(),
-) {
-//    val uiState by viewModel.uiState.collectAsState(HomeUIState(isLoading = false))
-    val time by viewModel.countDown.collectAsState(initial = 10)
-
-    Column {
-        //if(uiState.isLoading) CircularProgressIndicator()
-    }
-    Box(modifier = Modifier.fillMaxSize()){
-        Text(
-            text = time.toString(),
-            fontSize = 30.sp,
-            modifier = Modifier.align(Alignment.Center)
-        )
     }
 }

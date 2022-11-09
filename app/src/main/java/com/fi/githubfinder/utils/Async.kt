@@ -9,9 +9,7 @@ created by -fi-
  ****************************************
  */
 
-sealed class Async{
-    object Init: Async()
-    object Loading: Async()
-    data class Error(val code: Int?, val message: String?): Async()
-    data class Success<out T>(val data: T): Async()
+sealed class Async<out T>{
+    object Loading: Async<Nothing>()
+    data class Success<out T>(val data: T): Async<T>()
 }

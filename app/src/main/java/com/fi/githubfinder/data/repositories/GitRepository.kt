@@ -1,10 +1,9 @@
 package com.fi.githubfinder.data.repositories
 
-import com.fi.githubfinder.api.RestApi
-import com.fi.githubfinder.config.NetworkConfig
-import com.fi.githubfinder.data.models.ResponseGitRepositories
+import com.fi.githubfinder.data.models.GitData
+import com.fi.githubfinder.data.source.GitRemoteDataSource
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
+import com.fi.githubfinder.data.Result
 import javax.inject.Inject
 
 /**
@@ -16,12 +15,16 @@ created by -fi-
  ****************************************
  */
 
-class GitRepository @Inject constructor(private val api: RestApi) {
-    suspend fun getGit(query: String, page: Int,  perPage: Int): Response<ResponseGitRepositories> {
-        return api.getGit(
+class GitRepository @Inject constructor(private val remoteDataSource: GitRemoteDataSource) {
+    fun getDataStream(): Flow<Result<List<GitData?>>> {
+        return remoteDataSource.getDataStream()
+    }
+
+    suspend fun search(query: String, page: Int, perPage: Int){
+        return remoteDataSource.search(
             query = query,
             page = page,
-            perPage= perPage
+            perPage = perPage
         )
     }
 }

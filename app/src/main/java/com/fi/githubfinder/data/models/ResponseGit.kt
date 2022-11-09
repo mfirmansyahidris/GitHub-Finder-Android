@@ -11,7 +11,7 @@ data class ResponseGitRepositories(
 	val incompleteResults: Boolean? = null,
 
 	@field:SerializedName("items")
-	val items: List<ItemsItem?>? = null
+	val items: List<GitData?>? = null
 )
 
 data class Owner(
@@ -89,7 +89,7 @@ data class License(
 	val nodeId: String? = null
 )
 
-data class ItemsItem(
+data class GitData(
 
 	@field:SerializedName("allow_forking")
 	val allowForking: Boolean? = null,
